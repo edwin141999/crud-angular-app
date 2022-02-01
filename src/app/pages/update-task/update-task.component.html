@@ -1,1 +1,17 @@
-<p>update-task works!</p>
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="updateTask()">
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" formControlName="title" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" formControlName="description" class="form-control" />
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
