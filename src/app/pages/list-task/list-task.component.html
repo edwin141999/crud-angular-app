@@ -14,12 +14,12 @@
             type="checkbox"
             value="{{ task.done }}"
           />
-          <label class="form-check-label"> Hecho </label>
+          <label class="form-label"> Hecho </label>
         </div>
         <button class="btn btn-primary" routerLink="/update-task/{{ task.id }}">
           Update
         </button>
-        <button class="btn btn-danger">Delete</button>
+        <button (click)="deleteTask(task.id)" class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>

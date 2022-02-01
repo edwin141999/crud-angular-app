@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TASKS } from './mock-tasks';
-import { Task } from './task';
+import { Task } from '../../models/task';
+import { FirestoreService } from 'src/app/services/firestore/firestore.service';
 
 @Component({
   selector: 'app-list-task',
@@ -8,16 +8,32 @@ import { Task } from './task';
   styleUrls: ['./list-task.component.css'],
 })
 export class ListTaskComponent implements OnInit {
-  constructor() {}
+  listTasks: Task[] = [];
 
-  task: Task = {
-    id: 1,
-    title: 'primer tarea',
-    description: 'debo de hacer un crud',
-    done: false,
-  };
+  constructor(private _fb: FirestoreService) {}
 
-  listTasks = TASKS;
+  ngOnInit(): void {
+    this.getTasks();
+  }
 
-  ngOnInit(): void {}
+  getTasks() {
+    this._fb.get_Tasks().subscribe((doc) => {
+      this.listTasks = [];
+      doc.forEach((element: any) => {
+        this.listTasks.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data(),
+        });
+      });
+    });
+  }
+
+  deleteTask(id: any) {
+    this._fb.delete_Task(id).then(
+      () => {},
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
